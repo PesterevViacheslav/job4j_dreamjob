@@ -14,7 +14,6 @@ public class Post {
     private String name;
     private String description;
     private Date created;
-
     /**
      * Method Post. Конструктор
      * @param id ID
