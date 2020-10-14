@@ -57,8 +57,18 @@ public class Store {
      * @param post Вакансия
      */
     public void save(Post post) {
-        post.setId(POST_ID.incrementAndGet());
+        if (post.getId() == 0) {
+            post.setId(POST_ID.incrementAndGet());
+        }
         posts.put(post.getId(), post);
+    }
+    /**
+     * Method findById. Поиск вакансии по ID
+     * @param id ID
+     * @return Вакансия
+     */
+    public Post findById(int id) {
+        return posts.get(id);
     }
     /**
      * Method save. Сохранение кандидата
