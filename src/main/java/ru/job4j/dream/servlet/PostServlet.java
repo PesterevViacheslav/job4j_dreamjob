@@ -1,12 +1,12 @@
 package ru.job4j.dream.servlet;
 import ru.job4j.dream.model.Post;
 import ru.job4j.dream.store.Store;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Date;
 /**
  * Class PostServlet - Сервлет обработки вакансий. Решение задач уровня Middle. Части 012. Servlet JSP.
@@ -19,7 +19,7 @@ import java.util.Date;
 public class PostServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        req.setAttribute("post/posts", Store.instOf().findAllPosts());
+        req.setAttribute("posts", Store.instOf().findAllPosts());
         req.getRequestDispatcher("posts.jsp").forward(req, resp);
     }
     @Override

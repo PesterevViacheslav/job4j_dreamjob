@@ -17,7 +17,7 @@ import java.io.IOException;
 public class CandidateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        req.setAttribute("candidate/candidates", Store.instOf().findAllCandidates());
+        req.setAttribute("candidates", Store.instOf().findAllCandidates());
         req.getRequestDispatcher("candidates.jsp").forward(req, resp);
     }
     @Override
