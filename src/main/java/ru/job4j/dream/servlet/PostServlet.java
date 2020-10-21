@@ -1,12 +1,11 @@
 package ru.job4j.dream.servlet;
 import ru.job4j.dream.model.Post;
-import ru.job4j.dream.store.Store;
+import ru.job4j.dream.store.MemStore;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Date;
 /**
  * Class PostServlet - Сервлет обработки вакансий. Решение задач уровня Middle. Части 012. Servlet JSP.
@@ -19,13 +18,13 @@ import java.util.Date;
 public class PostServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        req.setAttribute("posts", Store.instOf().findAllPosts());
+        req.setAttribute("posts", MemStore.instOf().findAllPosts());
         req.getRequestDispatcher("posts.jsp").forward(req, resp);
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.setCharacterEncoding("UTF-8");
-        Store.instOf().save(new Post(Integer.valueOf((req.getParameter("id") != null) ? req.getParameter("id") :  Integer.toString(0)),
+        MemStore.instOf().save(new Post(Integer.valueOf((req.getParameter("id") != null) ? req.getParameter("id") :  Integer.toString(0)),
                                      req.getParameter("name"),
                                      req.getParameter("dsc"),
                                      new Date()));
