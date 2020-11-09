@@ -1,4 +1,5 @@
 package ru.job4j.dream.store;
+import ru.job4j.dream.model.Photo;
 import ru.job4j.dream.model.Post;
 import java.util.Collection;
 import java.util.Date;
@@ -93,6 +94,22 @@ public class MemStore implements Store{
     @Override
     public void truncatePost() {
         posts.clear();
+    }
+    /**
+     * Method create. Создание фото
+     * @param photo Фото
+     * @return Фото
+     */
+    @Override
+    public Photo create(Photo photo) {
+        return null;
+    }
+    /**
+     * Method delete. Удаление кандидата
+     * @param candidate
+     */
+    @Override
+    public void delete(Candidate candidate) {
     }
     /**
      * Method save. Сохранение кандидата

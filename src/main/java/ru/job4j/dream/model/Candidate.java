@@ -1,8 +1,8 @@
 package ru.job4j.dream.model;
 import java.util.Objects;
 /**
- * Class Store - Хранилище данных. Решение задач уровня Middle. Части 012. Servlet JSP.
- * 2. JSP 4. candicates.jsp - список кандидатов.[#282980]
+ * Class Candidate - Кандидат. Решение задач уровня Middle. Части 012. Servlet JSP.
+ * 2. JSP 4. candidates.jsp - список кандидатов.[#282980]
  *
  * @author Viacheslav Pesterev (pesterevvv@gmail.com)
  * @since 12.10.2020
@@ -11,6 +11,8 @@ import java.util.Objects;
 public class Candidate {
     private int id;
     private String name;
+    private int photoId;
+    private String photoName;
     /**
      * Method Candidate. Конструктор
      * @param id ID
@@ -19,6 +21,19 @@ public class Candidate {
     public Candidate(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+    /**
+     * Method Candidate. Конструктор
+     * @param id ID
+     * @param name Имя
+     * @param photoId ID фото
+     * @param photoName Название файла
+     */
+    public Candidate(int id, String name, int photoId, String photoName) {
+        this.id = id;
+        this.name = name;
+        this.photoId = photoId;
+        this.photoName = photoName;
     }
     /**
      * Method getId. Получение ID
@@ -42,6 +57,20 @@ public class Candidate {
         return name;
     }
     /**
+     * Method getPhotoId. Получение ID фото
+     * @return id
+     */
+    public int getPhotoId() {
+        return photoId;
+    }
+    /**
+     * Method getPhotoName. Получение названия файла
+     * @return Название
+     */
+    public String getPhotoName() {
+        return photoName;
+    }
+    /**
      * Method setName. Установка имени
      * @param name Имя
      */
@@ -62,6 +91,6 @@ public class Candidate {
     }
     @Override
     public String toString() {
-        return "Candidate{" + "id=" + id + ", name='" + name + '\'' + '}';
+        return "Candidate{" + "id=" + id + ", name='" + name + '\'' + ", photoId='" + photoId + '\'' + ", photoName='" + photoName + '\'' + '}';
     }
 }

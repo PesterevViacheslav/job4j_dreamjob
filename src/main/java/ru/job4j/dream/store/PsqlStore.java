@@ -1,6 +1,7 @@
 package ru.job4j.dream.store;
 import org.apache.commons.dbcp2.BasicDataSource;
 import ru.job4j.dream.model.Candidate;
+import ru.job4j.dream.model.Photo;
 import ru.job4j.dream.model.Post;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -52,14 +53,14 @@ public class PsqlStore implements Store {
     }
     /**
      * Method instOf. Получение экземпляра
-     * @return
+     * @return Экземпляр
      */
     public static Store instOf() {
         return Lazy.INST;
     }
     /**
      * Method findAllPosts. Отображение постов
-     * @return
+     * @return Коллекция вакансий
      */
     @Override
     public Collection<Post> findAllPosts() {
@@ -79,17 +80,21 @@ public class PsqlStore implements Store {
     }
     /**
      * Method findAllCandidates. Отображение кандидатов
-     * @return
+     * @return Коллекция кандидатов
      */
     @Override
     public Collection<Candidate> findAllCandidates() {
         List<Candidate> candidates = new ArrayList<>();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM candidate")
+             PreparedStatement ps =  cn.prepareStatement("SELECT t.*, p.name as photo_name FROM candidate t, photo p where p.id = t.photo_id")
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
-                    candidates.add(new Candidate(it.getInt("id"), it.getString("name")));
+                    candidates.add(new Candidate(it.getInt("id"),
+                                                 it.getString("name"),
+                                                 it.getInt("photo_id"),
+                                                 it.getString("photo_name"))
+                    );
                 }
             }
         } catch (Exception e) {
@@ -99,7 +104,7 @@ public class PsqlStore implements Store {
     }
     /**
      * Method save. Сохранение вакансии
-     * @param post
+     * @param post Вакансия
      */
     @Override
     public void save(Post post) {
@@ -111,7 +116,7 @@ public class PsqlStore implements Store {
     }
     /**
      * Method save. Сохранение кандидата
-     * @param candidate
+     * @param candidate Кандидат
      */
     @Override
     public void save(Candidate candidate) {
@@ -123,8 +128,8 @@ public class PsqlStore implements Store {
     }
     /**
      * Method create. Создание вакансии
-     * @param post
-     * @return
+     * @param post Выкансия
+     * @return Вакансия
      */
     private Post create(Post post) {
         try (Connection cn = pool.getConnection();
@@ -145,14 +150,15 @@ public class PsqlStore implements Store {
     }
     /**
      * Method create. Создание кандидата
-     * @param candidate
-     * @return
+     * @param candidate Кандидат
+     * @return Кандидат
      */
     private Candidate create(Candidate candidate) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("INSERT INTO candidate(name) VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO candidate(name, photo_id) VALUES (?,?)", PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, candidate.getName());
+            ps.setInt(2, candidate.getPhotoId());
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -165,8 +171,48 @@ public class PsqlStore implements Store {
         return candidate;
     }
     /**
+     * Method delete. Удаление кандидата
+     * @param candidate Кандидат
+     */
+    @Override
+    public void delete(Candidate candidate) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("DELETE FROM photo WHERE id = (SELECT id FROM candidate WHERE id = ?)");
+             PreparedStatement ps2 =  cn.prepareStatement("DELETE FROM candidate WHERE id = ?")
+        ) {
+            ps.setInt(1, candidate.getId());
+            ps.execute();
+            ps2.setInt(1, candidate.getId());
+            ps2.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * Method create. Создание фото
+     * @param photo Фото
+     * @return Фото
+     */
+    @Override
+    public Photo create(Photo photo) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO photo(name) VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setString(1, photo.getName());
+            ps.execute();
+            try (ResultSet id = ps.getGeneratedKeys()) {
+                if (id.next()) {
+                    photo.setId(id.getInt(1));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return photo;
+    }
+    /**
      * Method update. Изменение вакансии
-     * @param post
+     * @param post Вакансия
      */
     private void update(Post post) {
         try (Connection cn = pool.getConnection();
@@ -182,14 +228,15 @@ public class PsqlStore implements Store {
     }
     /**
      * Method update. Изменение кандидата
-     * @param candidate
+     * @param candidate Кандидат
      */
     private void update(Candidate candidate) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("UPDATE candidate SET name = ? WHERE id = ?")
+             PreparedStatement ps =  cn.prepareStatement("UPDATE candidate SET name = ?, photo_id = ? WHERE id = ?")
         ) {
             ps.setString(1, candidate.getName());
-            ps.setInt(2, candidate.getId());
+            ps.setInt(2, candidate.getPhotoId());
+            ps.setInt(3, candidate.getId());
             ps.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -226,7 +273,7 @@ public class PsqlStore implements Store {
     /**
      * Method findPostById. Поиск по ID.
      * @param id ID вакансии
-     * @return Заявка
+     * @return Вакансия
      */
     @Override
     public Post findPostById(int id) {
@@ -251,20 +298,22 @@ public class PsqlStore implements Store {
     }
     /**
      * Method findCandidateById. Поиск по ID.
-     * @param id ID вакансии
-     * @return Заявка
+     * @param id ID кандидата
+     * @return Кандидат
      */
     @Override
     public Candidate findCandidateById(int id) {
         Candidate res = null;
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM candidate WHERE id = ?", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps =  cn.prepareStatement("SELECT t.*, p.name as photo_name FROM candidate t, photo p WHERE t.id = ? AND p.id = t.photo_id", PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     res = new Candidate(rs.getInt("id"),
-                            rs.getString("name")
+                                        rs.getString("name"),
+                                        rs.getInt("photo_id"),
+                                        rs.getString("photo_name")
                     );
                 }
             }

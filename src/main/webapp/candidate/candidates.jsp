@@ -17,7 +17,7 @@
             integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Работа мечты</title>
 </head>
 <body>
@@ -32,17 +32,29 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">Названия</th>
+                        <th scope="col"></th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Фото</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${candidates}" var="candidate">
                         <tr>
                             <td>
-                                <a href='<c:url value="/post/edit.jsp?id=${post.id}"/>'>
+                                <a href='<c:url value="/candidate/edit.jsp?id=${candidate.id}"/>'>
                                     <i class="fa fa-edit mr-3"></i>
                                 </a>
+                            </td>
+                            <td>
                                 <c:out value="${candidate.name}"/>
+                            </td>
+                            <td>
+                                <img src="<c:url value='/download?name=${candidate.photoName}'/>" width="100px" height="100px"/>
+                            </td>
+                            <td>
+                                <a href='<c:url value="/candidate/delete.jsp?id=${candidate.id}"/>'>
+                                    <i class="fa fa-trash-o fa-lg"></i> Удалить</a>
+                                </a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -55,6 +67,8 @@
         <div class="form-group">
             <label>Имя</label>
             <input type="text" class="form-control" name="name">
+            <label>ID фото</label>
+            <input type="text" class="form-control" name="photoId">
         </div>
         <button type="submit" class="btn btn-primary">Сохранить</button>
     </form>

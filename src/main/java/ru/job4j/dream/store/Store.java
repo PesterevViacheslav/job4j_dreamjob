@@ -1,5 +1,6 @@
 package ru.job4j.dream.store;
 import ru.job4j.dream.model.Candidate;
+import ru.job4j.dream.model.Photo;
 import ru.job4j.dream.model.Post;
 import java.util.Collection;
 /**
@@ -19,4 +20,6 @@ public interface Store {
     Candidate findCandidateById(int id);
     void truncateCandidate();
     void truncatePost();
+    Photo create(Photo photo);
+    void delete(Candidate candidate);
 }

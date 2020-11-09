@@ -2,7 +2,7 @@ package ru.job4j.dream.model;
 import java.util.Date;
 import java.util.Objects;
 /**
- * Class Post - Модель данных. Решение задач уровня Middle. Части 012. Servlet JSP.
+ * Class Post - Вакансия. Решение задач уровня Middle. Части 012. Servlet JSP.
  * 2. JSP 2. Scriplet. Динамическая таблица.[#282978]
  *
  * @author Viacheslav Pesterev (pesterevvv@gmail.com)
