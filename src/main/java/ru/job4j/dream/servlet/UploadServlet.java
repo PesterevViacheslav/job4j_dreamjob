@@ -16,6 +16,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 /**
  * Class UploadServlet - Сервлет обработки загрузки файла. Решение задач уровня Middle. Части 012. Servlet JSP.
  * 5.1. Form. 1. Загрузка и скачивание файла.[#282970]
@@ -25,6 +27,7 @@ import java.util.List;
  * @version 1
  */
 public class UploadServlet extends HttpServlet {
+    private static final Logger LOG = LogManager.getLogger(UploadServlet.class.getName());
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<String> images = new ArrayList<>();
@@ -61,7 +64,7 @@ public class UploadServlet extends HttpServlet {
                 }
             }
         } catch (FileUploadException e) {
-            e.printStackTrace();
+            LOG.error(e.getStackTrace());
         }
         doGet(req, resp);
     }
