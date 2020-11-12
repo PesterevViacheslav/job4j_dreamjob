@@ -77,7 +77,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e.getStackTrace());
+            LOG.error("findAllPosts", e);;
         }
         return posts;
     }
@@ -101,7 +101,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e.getStackTrace());
+            LOG.error("findAllCandidates", e);
         }
         return candidates;
     }
@@ -147,7 +147,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e.getStackTrace());
+            LOG.error("create", e);
         }
         return post;
     }
@@ -169,7 +169,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e.getStackTrace());
+            LOG.error("create", e);
         }
         return candidate;
     }
@@ -188,7 +188,7 @@ public class PsqlStore implements Store {
             ps2.setInt(1, candidate.getId());
             ps2.execute();
         } catch (Exception e) {
-            LOG.error(e.getStackTrace());
+            LOG.error("delete", e);
         }
     }
     /**
@@ -209,7 +209,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e.getStackTrace());
+            LOG.error("create", e);
         }
         return photo;
     }
@@ -226,7 +226,7 @@ public class PsqlStore implements Store {
             ps.setInt(3, post.getId());
             ps.execute();
         } catch (Exception e) {
-            LOG.error(e.getStackTrace());
+            LOG.error("update", e);
         }
     }
     /**
@@ -242,7 +242,7 @@ public class PsqlStore implements Store {
             ps.setInt(3, candidate.getId());
             ps.execute();
         } catch (Exception e) {
-            LOG.error(e.getStackTrace());
+            LOG.error("update", e);
         }
     }
     /**
@@ -256,7 +256,7 @@ public class PsqlStore implements Store {
             ps.execute();
             pssq.execute();
         } catch (Exception e) {
-            LOG.error(e.getStackTrace());
+            LOG.error("truncatePost", e);
         }
     }
     /**
@@ -270,7 +270,7 @@ public class PsqlStore implements Store {
             ps.execute();
             pssq.execute();
         } catch (Exception e) {
-            LOG.error(e.getStackTrace());
+            LOG.error("truncateCandidate", e);
         }
     }
     /**
@@ -295,7 +295,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e.getStackTrace());
+            LOG.error("findPostById", e);
         }
         return res;
     }
@@ -321,7 +321,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e.getStackTrace());
+            LOG.error("findCandidateById", e);
         }
         return res;
     }
