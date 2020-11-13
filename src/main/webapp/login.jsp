@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page isELIgnored ="false" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -15,45 +16,40 @@
             integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
     <title>Работа мечты</title>
 </head>
+<%
+    String error = request.getParameter("error");
+%>
+
 <body>
-<li class="nav-item">
-    <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp">Войти</a>
-</li>
-<div class="container">
-    <div class="row">
-        <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/post/posts.do">Вакансии</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/candidate/candidates.do">Кандидаты</a>
-            </li>
-        </ul>
-    </div>
+<div class="container pt-3">
+
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                Сегодняшние вакансии.
+                Авторизация
             </div>
             <div class="card-body">
+                <form action="<%=request.getContextPath()%>/auth.do" method="post">
+                    <div class="form-group">
+                        <label>Почта</label>
+                        <input type="text" class="form-control" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label>Пароль</label>
+                        <input type="text" class="form-control" name="password">
+                    </div>
+                    <% if (error != null) { %>
+                        <div class="alert alert-warning" role="alert">
+                            ${error}
+                        </div>
+                    <% } %>
+                    <button type="submit" class="btn btn-primary">Войти</button>
+                </form>
             </div>
         </div>
     </div>
-    <div class="row pt-3">
-        <div class="card" style="width: 100%">
-            <div class="card-header">
-                Сегодняшние кандидаты.
-            </div>
-            <div class="card-body">
-            </div>
-        </div>
-    </div>
-    <a class="nav-link" href="<%=request.getContextPath()%>/post/edit.jsp">Добавить вакансию</a>
-    <a class="nav-link" href="<%=request.getContextPath()%>/candidate/edit.jsp">Добавить кандидата</a>
-    <a class="nav-link" href="<%=request.getContextPath()%>/upload.jsp">Изображения</a>
 </div>
 </body>
 </html>
