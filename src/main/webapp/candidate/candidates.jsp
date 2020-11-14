@@ -20,9 +20,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Работа мечты</title>
 </head>
-<body>
 <div class="container pt-3">
-
+    <div class="row">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> <c:out value="${user.name}"/> | Выйти</a>
+            </li>
+        </ul>
+    </div>
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">

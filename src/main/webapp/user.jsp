@@ -1,8 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="ru.job4j.dream.model.Post" %>
-<%@ page import="java.util.Date" %>
-<%@ page import="ru.job4j.dream.store.PsqlStore" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored ="false" %>
 <!doctype html>
 <html lang="en">
@@ -20,17 +16,13 @@
             integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
     <title>Работа мечты</title>
 </head>
-<body>
 <%
-    String id = request.getParameter("id");
-    Post post = new Post(0, "","", new Date());
-    if (id != null) {
-        post = PsqlStore.instOf().findPostById(Integer.valueOf(id));
-    }
+    String error = request.getParameter("error");
 %>
+
+<body>
 <div class="container pt-3">
     <div class="row">
         <ul class="nav">
@@ -42,21 +34,28 @@
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                <% if (id == null) { %>
-                Новая вакансия.
-                <% } else { %>
-                Редактирование вакансии.
-                <% } %>
+                Авторизация
             </div>
             <div class="card-body">
-                <form action="<%=request.getContextPath()%>/post/posts.do?id=<%=post.getId()%>" method="post">
+                <form action="<%=request.getContextPath()%>/user.do" method="post">
                     <div class="form-group">
                         <label>Имя</label>
-                        <input type="text" class="form-control" name="name" value="<%=post.getName()%>">
-                        <label>Комментарий</label>
-                        <input type="text" class="form-control" name="dsc" value="<%=post.getDescription()%>">
+                        <input type="text" class="form-control" name="name">
                     </div>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <div class="form-group">
+                        <label>Почта</label>
+                        <input type="text" class="form-control" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label>Пароль</label>
+                        <input type="text" class="form-control" name="password">
+                    </div>
+                    <% if (error != null) { %>
+                    <div class="alert alert-warning" role="alert">
+                        ${error}
+                    </div>
+                    <% } %>
+                    <button type="submit" class="btn btn-primary">Войти</button>
                 </form>
             </div>
         </div>

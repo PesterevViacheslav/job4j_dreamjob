@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page isELIgnored ="false" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -19,10 +20,20 @@
     <title>Работа мечты</title>
 </head>
 <body>
-<li class="nav-item">
-    <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp">Войти</a>
-</li>
 <div class="container">
+    <div class="row">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/user.jsp">Регистрация</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp">| Войти</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> <c:out value="${user.name}"/> | Выйти</a>
+            </li>
+        </ul>
+    </div>
     <div class="row">
         <ul class="nav">
             <li class="nav-item">

@@ -5,6 +5,8 @@ import org.apache.logging.log4j.Logger;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Photo;
 import ru.job4j.dream.model.Post;
+import ru.job4j.dream.model.User;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.sql.*;
@@ -152,6 +154,30 @@ public class PsqlStore implements Store {
         return post;
     }
     /**
+     * Method create. Создание пользователя
+     * @param user Пользователь
+     * @return Пользователь
+     */
+    @Override
+    public User create(User user) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO users(name, email, password) VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
+            ps.execute();
+            try (ResultSet id = ps.getGeneratedKeys()) {
+                if (id.next()) {
+                    user.setId(id.getInt(1));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("create", e);
+        }
+        return user;
+    }
+    /**
      * Method create. Создание кандидата
      * @param candidate Кандидат
      * @return Кандидат
@@ -296,6 +322,33 @@ public class PsqlStore implements Store {
             }
         } catch (Exception e) {
             LOG.error("findPostById", e);
+        }
+        return res;
+    }
+    /**
+     * Method findUserByEmailPassword. Поиск пользователя.
+     * @param email
+     * @return Пользователь
+     */
+    @Override
+    public User findUserByEmailPassword(String email, String password) {
+        User res = null;
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM users WHERE email = ? and password = ?", PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setString(1, email);
+            ps.setString(2, password);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    res = new User(rs.getInt("id"),
+                            rs.getString("name"),
+                            rs.getString("email"),
+                            rs.getString("password")
+                    );
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("findUserByEmailPassword", e);
         }
         return res;
     }

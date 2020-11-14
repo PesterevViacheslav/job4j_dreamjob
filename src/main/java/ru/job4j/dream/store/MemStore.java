@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import ru.job4j.dream.model.Candidate;
+import ru.job4j.dream.model.User;
+
 /**
  * Class MemStore - Хранилище данных в памяти. Решение задач уровня Middle. Части 012. Servlet JSP.
  * 2. JSP 2. Scriplet. Динамическая таблица.[#282978]
@@ -104,6 +106,11 @@ public class MemStore implements Store{
     public Photo create(Photo photo) {
         return null;
     }
+    @Override
+    public User create(User user) {
+        return null;
+    }
+
     /**
      * Method delete. Удаление кандидата
      * @param candidate
@@ -111,6 +118,11 @@ public class MemStore implements Store{
     @Override
     public void delete(Candidate candidate) {
     }
+    @Override
+    public User findUserByEmailPassword(String email, String password) {
+        return null;
+    }
+
     /**
      * Method save. Сохранение кандидата
      * @param candidate Вакансия

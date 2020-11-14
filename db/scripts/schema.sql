@@ -20,3 +20,11 @@ CREATE TABLE IF NOT EXISTS candidate (
    CONSTRAINT pk_candidate PRIMARY KEY(id),
    CONSTRAINT fk_candidate_photo FOREIGN KEY(photo_id) REFERENCES photo(id)
 );
+CREATE SEQUENCE IF NOT EXISTS users_sq MINVALUE 0 START WITH 0;
+CREATE TABLE IF NOT EXISTS users (
+   id INTEGER DEFAULT nextval('users_sq'),
+   name TEXT,
+   email TEXT,
+   password TEXT,
+   CONSTRAINT pk_users PRIMARY KEY(id)
+);
