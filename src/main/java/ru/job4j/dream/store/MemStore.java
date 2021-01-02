@@ -26,7 +26,7 @@ public class MemStore implements Store{
     /**
      * Method Store. Конструктор
      */
-    private MemStore() {
+    public MemStore() {
         posts.put(1, new Post(1, "Junior Java Job", "Junior", new Date()));
         posts.put(2, new Post(2, "Middle Java Job", "Middle", new Date()));
         posts.put(3, new Post(3, "Senior Java Job", "Senior", new Date()));

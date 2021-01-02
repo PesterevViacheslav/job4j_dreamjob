@@ -18,7 +18,7 @@ import java.util.Date;
  */
 public class PostServlet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.setCharacterEncoding("UTF-8");
         PsqlStore.instOf().save(new Post(Integer.valueOf((req.getParameter("id") != null) ? req.getParameter("id") :  Integer.toString(0)),
                                      req.getParameter("name"),

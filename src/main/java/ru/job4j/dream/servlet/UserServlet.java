@@ -5,11 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-
-import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.User;
 import ru.job4j.dream.store.PsqlStore;
-
 /**
  * Class UserServlet - Сервлет создания пользователя. Решение задач уровня Middle. Части 012. Servlet JSP.
  * 6. Filter, Security. 0. Страница Login.jsp[#282992]
@@ -40,4 +37,3 @@ public class UserServlet extends HttpServlet {
         }
     }
 }
-
