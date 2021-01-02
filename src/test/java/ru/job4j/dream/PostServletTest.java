@@ -1,10 +1,10 @@
 package ru.job4j.dream;
 import java.io.IOException;
+import org.apache.logging.log4j.LogManager;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import ru.job4j.dream.servlet.PostServlet;
@@ -26,8 +26,7 @@ import static org.powermock.api.mockito.PowerMockito.when;
  * @version 1
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(PsqlStore.class)
-//@PowerMockIgnore({"org.mockito.*"})
+@PrepareForTest({PsqlStore.class, LogManager.class})
 public class PostServletTest {
     /**
      * Тест метода сохранения вакансии.
@@ -35,6 +34,7 @@ public class PostServletTest {
     @Test
     public void whenAddPostThenStoreIt() throws IOException {
         Store store = new MemStore();
+        PowerMockito.mockStatic(LogManager.class);
         PowerMockito.mockStatic(PsqlStore.class);
         Mockito.when(PsqlStore.instOf()).thenReturn(store);
         HttpServletRequest req = mock(HttpServletRequest.class);
