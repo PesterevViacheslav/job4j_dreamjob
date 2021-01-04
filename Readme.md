@@ -1,0 +1,2 @@
+[![Build Status](https://travis-ci.org/PesterevViacheslav/job4j_dreamjob.svg?branch=master)](https://travis-ci.org/PesterevViacheslav/job4j_dreamjob)
+[![Coverage Status](https://codecov.io/gh/PesterevViacheslav/job4j_dreamjob/branch/master/graph/badge.svg)](https://codecov.io/gh/PesterevViacheslav/job4j_dreamjob)
