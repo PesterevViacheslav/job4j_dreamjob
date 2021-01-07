@@ -29,7 +29,12 @@
   <script> 
 	 function addRow() {
 	    if (validate()) { 
-			$('#tbl tr:last').after('<tr><td>' + $('#name').val() +'</td><td>' + $('#surname').val() +'</td><td>' + $('input[name=sex]:checked').val() +'</td><td>' + $('#comment').val() +'</td></tr>');
+			$('#tbl tr:last').after('<tr>' +
+                                        '<td>' + $('#name').val() +'</td>' +
+                                        '<td>' + $('#surname').val() +'</td>' +
+                                        '<td>' + $('input[name=sex]:checked').val() +'</td>' +
+                                        '<td>' + $('#comment').val() +'</td>' +
+                                    '</tr>');
 		}
 		return false;
 	}
