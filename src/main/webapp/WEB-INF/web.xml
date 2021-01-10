@@ -44,6 +44,11 @@
     <servlet-name>GreetingServlet</servlet-name>
     <servlet-class>ru.job4j.dream.servlet.GreetingServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>JsonController</servlet-name>
+    <servlet-class>ru.job4j.dream.servlet.JsonController</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>PostServlet</servlet-name>
     <url-pattern>/post/posts.do</url-pattern>
@@ -75,5 +80,9 @@
   <servlet-mapping>
     <servlet-name>GreetingServlet</servlet-name>
     <url-pattern>/greet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>JsonController</servlet-name>
+    <url-pattern>/json</url-pattern>
   </servlet-mapping>
 </web-app>
