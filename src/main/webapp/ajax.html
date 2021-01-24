@@ -13,14 +13,17 @@
 <script>
     function sendGreeting() {
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             url: 'http://localhost:8080/dreamjob/json',
-            data: 'name=' + $('#exampleInputEmail1').val(),
+            data: JSON.stringify({
+                text: $("#exampleInputEmail1").val()
+            }),
             dataType: 'json'
         }).done(function(data) {
             $('#lbl').before('<p>' + data.text + data.name + '</p>');
         }).fail(function(err){
-            alert(err);
+            console.log(err);
+            //alert(err);
         });
     }
 </script>
