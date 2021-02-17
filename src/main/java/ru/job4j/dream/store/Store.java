@@ -1,8 +1,6 @@
 package ru.job4j.dream.store;
-import ru.job4j.dream.model.Candidate;
-import ru.job4j.dream.model.Photo;
-import ru.job4j.dream.model.Post;
-import ru.job4j.dream.model.User;
+import ru.job4j.dream.model.*;
+
 import java.util.Collection;
 /**
  * Interface Store - Хранилище. Решение задач уровня Middle. Части 012. Servlet JSP.
@@ -25,4 +23,5 @@ public interface Store {
     User create(User user);
     void delete(Candidate candidate);
     User findUserByEmailPassword(String email, String password);
-}
+    Collection<City> findAllCities();
+    }

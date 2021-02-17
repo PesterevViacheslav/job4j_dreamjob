@@ -13,6 +13,8 @@ public class Candidate {
     private String name;
     private int photoId;
     private String photoName;
+    private int cityId;
+    private String cityName;
     /**
      * Method Candidate. Конструктор
      * @param id ID
@@ -29,11 +31,13 @@ public class Candidate {
      * @param photoId ID фото
      * @param photoName Название файла
      */
-    public Candidate(int id, String name, int photoId, String photoName) {
+    public Candidate(int id, String name, int photoId, String photoName, int cityId, String cityName) {
         this.id = id;
         this.name = name;
         this.photoId = photoId;
         this.photoName = photoName;
+        this.cityId = cityId;
+        this.cityName = cityName;
     }
     /**
      * Method getId. Получение ID
@@ -77,6 +81,20 @@ public class Candidate {
     public void setName(String name) {
         this.name = name;
     }
+    /**
+     * Method getCityId. Получение id города
+     * @return id
+     */
+    public int getCityId() {
+        return cityId;
+    }
+    /**
+     * Method getCityName. Получение названия города
+     * @return Название
+     */
+    public String getCityName() {
+        return cityName;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -91,6 +109,6 @@ public class Candidate {
     }
     @Override
     public String toString() {
-        return "Candidate{" + "id=" + id + ", name='" + name + '\'' + ", photoId='" + photoId + '\'' + ", photoName='" + photoName + '\'' + '}';
+        return "Candidate{" + "id=" + id + ", name='" + name + '\'' + ", photoId='" + photoId + '\'' + ", photoName='" + photoName + '\'' + ", cityId='" + cityId + '\'' + '}';
     }
 }

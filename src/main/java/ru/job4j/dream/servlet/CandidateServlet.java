@@ -19,6 +19,7 @@ public class CandidateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         req.setAttribute("candidates", PsqlStore.instOf().findAllCandidates());
+        req.setAttribute("cities", PsqlStore.instOf().findAllCities());
         req.getRequestDispatcher("candidates.jsp").forward(req, resp);
     }
     @Override
@@ -29,12 +30,18 @@ public class CandidateServlet extends HttpServlet {
             PsqlStore.instOf().delete(new Candidate(Integer.valueOf((req.getParameter("id"))),
                     req.getParameter("name"),
                     0,
-                    req.getParameter("photoName")));
+                    req.getParameter("photoName"),
+                    0,
+                    req.getParameter("cityName")
+                    ));
         } else {
-            PsqlStore.instOf().save(new Candidate(Integer.valueOf((req.getParameter("id") != null) ? req.getParameter("id") : Integer.toString(0)),
+            PsqlStore.instOf().save(new Candidate(
+                    Integer.valueOf((req.getParameter("id") != null) ? req.getParameter("id") : Integer.toString(0)),
                     req.getParameter("name"),
                     Integer.valueOf(req.getParameter("photoId")),
-                    req.getParameter("photoName")));
+                    req.getParameter("photoName"),
+                    Integer.valueOf(req.getParameter("cityId")),
+                    req.getParameter("cityName")));
         }
         resp.sendRedirect(req.getContextPath() + "/candidate/candidates.do");
     }

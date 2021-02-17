@@ -18,6 +18,40 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
+    <script>
+        function validate() {
+            let res = true;
+            $('.container input').each(function() {
+                let $this = $(this);
+                if ($this.val() == "") {
+                    $this.css('border', '1px solid red');
+                    $this.attr("placeholder", "Field must be filled out");
+                    $this.addClass('error');
+                    if (res) {
+                        res = false;
+                    }
+                } else {
+                    $this.css('border', '#ccc');
+                }
+            });
+            return res;
+        }
+    </script>
+    <script>
+        function getCities() {
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:8080/dreamjob/city',
+             }).done(function(data) {
+                $("#777").html(data);
+             }).fail(function(err){
+                 console.log(err);
+                 alert('ERR!!!');
+            });
+             return false;
+        }
+    </script>
     <title>Работа мечты</title>
 </head>
 <div class="container pt-3">
@@ -40,6 +74,7 @@
                         <th scope="col"></th>
                         <th scope="col">Название</th>
                         <th scope="col">Фото</th>
+                        <th scope="col">Город</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -55,6 +90,9 @@
                             </td>
                             <td>
                                 <img src="<c:url value='/download?name=${candidate.photoName}'/>" width="100px" height="100px"/>
+                            </td>
+                            <td>
+                                <c:out value="${candidate.cityName}"/>
                             </td>
                             <td>
                                 <a href='<c:url value="/candidate/delete.jsp?id=${candidate.id}"/>'>
@@ -74,8 +112,15 @@
             <input type="text" class="form-control" name="name">
             <label>ID фото</label>
             <input type="text" class="form-control" name="photoId">
+            <label>Город</label>
+            <p><select size="3" multiple name="cityId" required="true" id="777">
+                <c:forEach items="${cities}" var="city">
+                    <option value="${city.id}">${city.name}</option>
+                </c:forEach>
+            </select></p>
         </div>
-        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <button type="button" class="btn btn-primary" onclick="return getCities();">Обновить список городов</button>
+        <button type="submit" class="btn btn-primary" onclick="return validate();">Сохранить</button>
     </form>
 </div>
 </body>

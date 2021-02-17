@@ -1,13 +1,11 @@
 package ru.job4j.dream.store;
-import ru.job4j.dream.model.Photo;
-import ru.job4j.dream.model.Post;
+import ru.job4j.dream.model.*;
+
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-import ru.job4j.dream.model.Candidate;
-import ru.job4j.dream.model.User;
 
 /**
  * Class MemStore - Хранилище данных в памяти. Решение задач уровня Middle. Части 012. Servlet JSP.
@@ -130,5 +128,9 @@ public class MemStore implements Store{
     public void save(Candidate candidate) {
         candidate.setId(CANDIDATE_ID.incrementAndGet());
         candidates.put(candidate.getId(), candidate);
+    }
+    @Override
+    public Collection<City> findAllCities() {
+        return null;
     }
 }

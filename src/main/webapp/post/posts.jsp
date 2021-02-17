@@ -19,6 +19,25 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Работа мечты</title>
+    <script>
+        function validate() {
+            let res = true;
+            $('.container input').each(function() {
+                let $this = $(this);
+                if ($this.val() == "") {
+                    $this.css('border', '1px solid red');
+                    $this.attr("placeholder", "Field must be filled out");
+                    $this.addClass('error');
+                    if (res) {
+                        res = false;
+                    }
+                } else {
+                    $this.css('border', '#ccc');
+                }
+            });
+            return res;
+        }
+    </script>
 </head>
 <body>
 <div class="container pt-3">
@@ -87,7 +106,7 @@
             <label>Комментарий</label>
             <input type="text" class="form-control" name="dsc">
         </div>
-        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <button type="submit" class="btn btn-primary" onclick="return validate();">Сохранить</button>
     </form>
 </div>
 </body>
