@@ -76,7 +76,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error("findAllPosts", e);;
+            LOG.error("findAllPosts", e);
         }
         return cities;
     }
@@ -92,11 +92,14 @@ public class PsqlStore implements Store {
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
-                    posts.add(new Post(it.getInt("id"), it.getString("name"), it.getString("description"), it.getDate("created")));
+                    posts.add(new Post(it.getInt("id"),
+                                       it.getString("name"),
+                                       it.getString("description"),
+                                       it.getDate("created")));
                 }
             }
         } catch (Exception e) {
-            LOG.error("findAllPosts", e);;
+            LOG.error("findAllPosts", e);
         }
         return posts;
     }
@@ -108,7 +111,10 @@ public class PsqlStore implements Store {
     public Collection<Candidate> findAllCandidates() {
         List<Candidate> candidates = new ArrayList<>();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("SELECT t.*, p.name as photo_name, ct.name as city_name FROM candidate t, photo p, city ct where p.id = t.photo_id and ct.id = t.city_id")
+             PreparedStatement ps =  cn.prepareStatement("SELECT t.*, p.name as photo_name,"
+                     + "  ct.name as city_name "
+                     + "  FROM candidate t, photo p, city ct "
+                     + "  where p.id = t.photo_id and ct.id = t.city_id")
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
@@ -157,7 +163,9 @@ public class PsqlStore implements Store {
      */
     private Post create(Post post) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("INSERT INTO post(name, description) VALUES (?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO post(name, description)"
+                             + " VALUES (?, ?)",
+                     PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, post.getName());
             ps.setString(2, post.getDescription());
@@ -180,7 +188,9 @@ public class PsqlStore implements Store {
     @Override
     public User create(User user) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("INSERT INTO users(name, email, password) VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO users(name, email, password) "
+                             + "VALUES (?, ?, ?)",
+                     PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, user.getName());
             ps.setString(2, user.getEmail());
@@ -203,7 +213,10 @@ public class PsqlStore implements Store {
      */
     private Candidate create(Candidate candidate) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("INSERT INTO candidate(name, photo_id, city_id) VALUES (?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps =  cn.prepareStatement("INSERT "
+                             + "INTO candidate(name, photo_id, city_id)"
+                     + " VALUES (?,?,?)",
+                     PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, candidate.getName());
             ps.setInt(2, candidate.getPhotoId());
@@ -226,7 +239,8 @@ public class PsqlStore implements Store {
     @Override
     public void delete(Candidate candidate) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("DELETE FROM photo WHERE id = (SELECT id FROM candidate WHERE id = ?)");
+             PreparedStatement ps =  cn.prepareStatement("DELETE FROM photo "
+                     + "WHERE id = (SELECT id FROM candidate WHERE id = ?)");
              PreparedStatement ps2 =  cn.prepareStatement("DELETE FROM candidate WHERE id = ?")
         ) {
             ps.setInt(1, candidate.getId());
@@ -245,7 +259,8 @@ public class PsqlStore implements Store {
     @Override
     public Photo create(Photo photo) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("INSERT INTO photo(name) VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO photo(name) VALUES (?)",
+                     PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, photo.getName());
             ps.execute();
@@ -265,7 +280,9 @@ public class PsqlStore implements Store {
      */
     private void update(Post post) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("UPDATE post SET name = ?, description = ? WHERE id = ?", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps =  cn.prepareStatement("UPDATE post "
+                             + "SET name = ?, description = ? WHERE id = ?",
+                     PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, post.getName());
             ps.setString(2, post.getDescription());
@@ -281,7 +298,8 @@ public class PsqlStore implements Store {
      */
     private void update(Candidate candidate) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("UPDATE candidate SET name = ?, photo_id = ?, city_id = ? WHERE id = ?")
+             PreparedStatement ps =  cn.prepareStatement("UPDATE candidate"
+                     + " SET name = ?, photo_id = ?, city_id = ? WHERE id = ?")
         ) {
             ps.setString(1, candidate.getName());
             ps.setInt(2, candidate.getPhotoId());
@@ -329,7 +347,8 @@ public class PsqlStore implements Store {
     public Post findPostById(int id) {
         Post res = null;
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM post WHERE id = ?", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM post WHERE id = ?",
+                     PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
@@ -355,7 +374,9 @@ public class PsqlStore implements Store {
     public User findUserByEmailPassword(String email, String password) {
         User res = null;
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM users WHERE email = ? and password = ?", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM "
+                             + "users WHERE email = ? and password = ?",
+                     PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, email);
             ps.setString(2, password);
@@ -382,7 +403,13 @@ public class PsqlStore implements Store {
     public Candidate findCandidateById(int id) {
         Candidate res = null;
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("SELECT t.*, p.name as photo_name, ct.name as city_name FROM candidate t, photo p, city ct WHERE t.id = ? AND p.id = t.photo_id AND ct.id = t.city_id", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps =  cn.prepareStatement("SELECT t.*,"
+                             + " p.name as photo_name,"
+                             + " ct.name as city_name"
+                             + " FROM candidate t, photo p, city ct"
+                             + " WHERE t.id = ? AND p.id = t.photo_id"
+                             + " AND ct.id = t.city_id",
+                     PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {

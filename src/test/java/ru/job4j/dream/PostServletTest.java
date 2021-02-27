@@ -18,7 +18,8 @@ import static org.junit.Assert.assertThat;
 import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.when;
 /**
- * Class PostServletTest - Автотест сервлета обработки вакансий. Решение задач уровня Middle. Части 012. Servlet JSP.
+ * Class PostServletTest - Автотест сервлета обработки вакансий.
+ * Решение задач уровня Middle. Части 012. Servlet JSP.
  * 7. Mockito. 1. Произвести автоматическое тестирование всех сервлетов.[282999]
  *
  * @author Viacheslav Pesterev (pesterevvv@gmail.com)

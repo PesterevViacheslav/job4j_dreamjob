@@ -8,7 +8,8 @@ import java.io.IOException;
 import ru.job4j.dream.model.User;
 import ru.job4j.dream.store.PsqlStore;
 /**
- * Class UserServlet - Сервлет создания пользователя. Решение задач уровня Middle. Части 012. Servlet JSP.
+ * Class UserServlet - Сервлет создания пользователя.
+ * Решение задач уровня Middle. Части 012. Servlet JSP.
  * 6. Filter, Security. 0. Страница Login.jsp[#282992]
  *
  * @author Viacheslav Pesterev (pesterevvv@gmail.com)
@@ -17,7 +18,8 @@ import ru.job4j.dream.store.PsqlStore;
  */
 public class UserServlet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req,
+                          HttpServletResponse resp) throws ServletException, IOException {
         String usrName = req.getParameter("name");
         String usrEmail = req.getParameter("email");
         String usrPassword = req.getParameter("password");
@@ -28,7 +30,8 @@ public class UserServlet extends HttpServlet {
                 sc.setAttribute("user", user);
                 resp.sendRedirect(req.getContextPath() + "/post/posts.do");
             } else {
-                sc.setAttribute("user", PsqlStore.instOf().create(new User(0, usrName, usrEmail, usrPassword)));
+                sc.setAttribute("user",
+                        PsqlStore.instOf().create(new User(0, usrName, usrEmail, usrPassword)));
                 resp.sendRedirect(req.getContextPath() + "/post/posts.do");
             }
         } else {

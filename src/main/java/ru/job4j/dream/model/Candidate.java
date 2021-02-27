@@ -31,7 +31,12 @@ public class Candidate {
      * @param photoId ID фото
      * @param photoName Название файла
      */
-    public Candidate(int id, String name, int photoId, String photoName, int cityId, String cityName) {
+    public Candidate(int id,
+                     String name,
+                     int photoId,
+                     String photoName,
+                     int cityId,
+                     String cityName) {
         this.id = id;
         this.name = name;
         this.photoId = photoId;
@@ -97,11 +102,14 @@ public class Candidate {
     }
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Candidate candidate = (Candidate) o;
-        return id == candidate.id &&
-                Objects.equals(name, candidate.name);
+        return id == candidate.id && Objects.equals(name, candidate.name);
     }
     @Override
     public int hashCode() {
@@ -109,6 +117,8 @@ public class Candidate {
     }
     @Override
     public String toString() {
-        return "Candidate{" + "id=" + id + ", name='" + name + '\'' + ", photoId='" + photoId + '\'' + ", photoName='" + photoName + '\'' + ", cityId='" + cityId + '\'' + '}';
+        return "Candidate{" + "id=" + id + ", name='" + name + '\''
+                            +  ", photoId='" + photoId + '\'' + ", photoName='"
+                            + photoName + '\'' + ", cityId='" + cityId + '\'' + '}';
     }
 }

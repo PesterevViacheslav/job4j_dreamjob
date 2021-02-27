@@ -50,11 +50,14 @@ public class Photo {
     }
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Photo photo  = (Photo) o;
-        return id == photo.id &&
-                Objects.equals(name, photo.name);
+        return id == photo.id && Objects.equals(name, photo.name);
     }
     @Override
     public int hashCode() {

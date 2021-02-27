@@ -14,7 +14,7 @@ public class JsonController extends HttpServlet {
         protected String text;
     }
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Gson gson = new Gson();
         Enumeration en = req.getParameterNames();
         Response response = null;
@@ -24,7 +24,8 @@ public class JsonController extends HttpServlet {
         resp.setContentType("text/json");
         resp.setCharacterEncoding("UTF-8");
         PrintWriter writer = new PrintWriter(resp.getOutputStream());
-        writer.println("{\"name\" : \"" + response.text + "\", \"text\" : \" Nice to meet you, \"}");
+        writer.println("{\"name\" : \"" + response.text
+                        + "\", \"text\" : \" Nice to meet you, \"}");
         writer.flush();
     }
 

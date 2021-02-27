@@ -19,7 +19,8 @@ import java.util.List;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 /**
- * Class UploadServlet - Сервлет обработки загрузки файла. Решение задач уровня Middle. Части 012. Servlet JSP.
+ * Class UploadServlet - Сервлет обработки загрузки файла.
+ * Решение задач уровня Middle. Части 012. Servlet JSP.
  * 5.1. Form. 1. Загрузка и скачивание файла.[#282970]
  *
  * @author Viacheslav Pesterev (pesterevvv@gmail.com)
@@ -29,9 +30,11 @@ import org.apache.logging.log4j.LogManager;
 public class UploadServlet extends HttpServlet {
     private static final Logger LOG = LogManager.getLogger(UploadServlet.class.getName());
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req,
+                         HttpServletResponse resp) throws ServletException, IOException {
         List<String> images = new ArrayList<>();
-        for (File name : new File(System.getenv("CATALINA_HOME") + "\\bin\\images").listFiles()) {
+        for (File name : new File(
+       System.getenv("CATALINA_HOME") + "\\bin\\images").listFiles()) {
             images.add(name.getName());
         }
         req.setAttribute("images", images);
@@ -39,7 +42,8 @@ public class UploadServlet extends HttpServlet {
         dispatcher.forward(req, resp);
     }
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req,
+                          HttpServletResponse resp) throws ServletException, IOException {
         DiskFileItemFactory factory = new DiskFileItemFactory();
         ServletContext servletContext = this.getServletConfig().getServletContext();
         File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
