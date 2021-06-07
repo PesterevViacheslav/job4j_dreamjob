@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS candidate (
    photo_id INTEGER,
    city_id INTEGER,
    CONSTRAINT pk_candidate PRIMARY KEY(id),
-   CONSTRAINT fk_candidate_photo FOREIGN KEY(photo_id) REFERENCES photo(id)
+   CONSTRAINT fk_candidate_photo FOREIGN KEY(photo_id) REFERENCES photo(id),
    CONSTRAINT fk_candidate_city FOREIGN KEY(city_id) REFERENCES city(id)
 );
 CREATE SEQUENCE IF NOT EXISTS users_sq MINVALUE 0 START WITH 0;
